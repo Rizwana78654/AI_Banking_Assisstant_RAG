@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI  Banking Assistant</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+}
+
+/* HEADER */
+
+.header{
+    width:100%;
+    background:#0f4c81;
+    color:white;
+    text-align:center;
+    padding:15px;
+}
+
+.header h1{
+    font-size:40px;
+    margin-bottom:10px;
+}
+
+.header img{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+}
+
+/* MENU */
+
+.menu{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;          /* Reduced from 35px */
+    justify-items:center;
+    padding:20px;      /* Reduced from 40px */
+    background:white;
+}
+
+.menu button{
+    width:150px;
+    height:110px;
+    border:2px solid #1565c0;
+    border-radius:12px;
+    background:white;
+    color:#0f4c81;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:bold;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:3px;
+
+    transition:0.3s;
+}
+
+.menu button:hover{
+    background:#e8f2ff;
+    transform:translateY(-5px);
+}
+
+.menu button img{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    object-fit:cover;
+    background:white;
+}
+
+/* CONTAINER */
+
+.container{
+    width:90%;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 0 10px rgba(0,0,0,.15);
+}
+
+/* SERVICE */
+
+#service{
+    color:#1565c0;
+    margin-bottom:20px;
+}
+
+/* TEXTAREA */
+
+textarea{
+    width:100%;
+    height:120px;
+    padding:15px;
+    font-size:11px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    resize:none;
+}
+
+/* BUTTON */
+
+.ask{
+    background:#0f4c81;
+    color:white;
+    padding:12px 35px;
+    font-size:18px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.ask:hover{
+    background:#1976d2;
+}
+
+/* ANSWER */
+
+.answer{
+    margin-top:20px;
+    background:#f7f7f7;
+    border-left:5px solid green;
+    border-radius:10px;
+    padding:15px 20px;
+    line-height:1.6;
+}
+.answer h3{
+    margin:0;
+    padding:0;
+}
+
+.answer p{
+    margin:8px 0 0 0;
+    padding:0;
+    white-space:pre-wrap;
+    line-height:1.6;
+}
+/* FOOTER */
+
+footer{
+    margin-top:30px;
+    background:#0f4c81;
+    color:white;
+    text-align:center;
+    padding:15px;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.menu{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media(max-width:500px){
+
+.menu{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<h1> AI Banking Assistant</h1>
+
+<img src="{{ url_for('static', filename='images/bank.jpg') }}">
+
+</div>
+
+<div class="menu">
+
+<button type="button" onclick="selectService('Savings Account')">
+<img src="{{ url_for('static', filename='images/savings.jpg') }}">
+Savings Account
+</button>
+
+<button type="button" onclick="selectService('Current Account')">
+<img src="{{ url_for('static', filename='images/current.jpg') }}">
+Current Account
+</button>
+
+<button type="button" onclick="selectService('Home Loan')">
+<img src="{{ url_for('static', filename='images/home_loan.jpg') }}">
+Home Loan
+</button>
+
+<button type="button" onclick="selectService('Personal Loan')">
+<img src="{{ url_for('static', filename='images/personal.jpg') }}">
+Personal Loan
+</button>
+
+<button type="button" onclick="selectService('Credit Card')">
+<img src="{{ url_for('static', filename='images/credit.jpg') }}">
+Credit Card
+</button>
+
+<button type="button" onclick="selectService('Fixed Deposit')">
+<img src="{{ url_for('static', filename='images/fd.jpg') }}">
+Fixed Deposit
+</button>
+
+<button type="button" onclick="selectService('Internet Banking')">
+<img src="{{ url_for('static', filename='images/internet.jpg') }}">
+Internet Banking
+</button>
+
+<button type="button" onclick="selectService('Mobile Banking')">
+<img src="{{ url_for('static', filename='images/mobile.jpg') }}">
+Mobile Banking
+</button>
+
+</div>
+
+<div class="container">
+
+<h2>
+Selected Service :
+<span id="service" style="color:green;"></span>
+</h2>
+<form method="POST">
+
+<input type="hidden" name="topic" id="topic">
+
+<label><b>Ask AI Assistant</b></label>
+
+<br><br>
+
+<textarea
+name="question"
+placeholder="Type your question here..."
+required></textarea>
+
+<br>
+
+<button class="ask" type="submit">Ask →</button>
+
+</form>
+
+{% if answer %}
+<div class="answer">
+    <h3>Answer</h3>
+    <p>{{ answer }}</p>
+</div>
+{% endif %}
+
+</div> <!-- Close container div -->
+
+<footer>
+
+© 2026 SBI AI Banking Assistant
+
+</footer>
+
+<script>
+
+function selectService(service){
+
+document.getElementById("service").innerHTML = service;
+
+document.getElementById("topic").value = service;
+
+}
+
+</script>
+
+</body>
+</html>
